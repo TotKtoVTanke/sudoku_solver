@@ -14,14 +14,16 @@ public class Cell {
         this.x = x;
         this.y = y;
         this.value = value;
-        if (this.value != 0) isEmpty = false;
+        if (this.value != 0) {isEmpty = false;
+        candidates.clear();}
     }
 
     public void removeCandidate(Integer candidate){
         this.candidates.remove(candidate);
      //   System.out.println("removed " + candidate + " from cell with x " + x +  " and y " + y);
-        /*if (candidates.size() == 1) {this.value = candidates.get(0);
-        isEmpty = false;}*/
+        if (candidates.size() == 1) {this.value = candidates.get(0);
+        candidates.clear();
+        isEmpty = false;}
     }
 
     @Override

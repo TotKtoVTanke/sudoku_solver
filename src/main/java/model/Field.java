@@ -15,13 +15,17 @@ public class Field {
 
     public Field() {
         initField();
+    }
 
+    public void solving(){
+        analyzeCandidatesForAllCells();
     }
 
     public void printField(){
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-               // System.out.print(field[i][j].getValue() + "/" + field[i][j].getGroup().size() + " ");
+               /* System.out.print(field[i][j].getValue() + "/" +
+                        (field[i][j].getCandidates().size() != 0?field[i][j].getCandidates().size():"-") + " ");*/
                 System.out.print(field[i][j].getValue() + " ");
                 if ((j + 1) % 3 == 0) System.out.print("| ");
             }
@@ -33,7 +37,7 @@ public class Field {
     private void initField(){
         field = sudokuFieldReceiver.getField();
         initGroups();
-        initCandidates();
+        analyzeCandidatesForAllCells();
     }
 
     private void initGroups() {
@@ -42,6 +46,25 @@ public class Field {
                 field[i][j].setGroup(initCellsGroups(field[i][j]));
             }
         }
+    }
+
+
+    private void analyzeCandidatesForAllCells() {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (!field[i][j].isEmpty()){
+                    analyzeCandidates(field[i][j]);
+                }
+            }
+        }
+    }
+
+    private void analyzeCandidates(Cell cell){
+        int value = cell.getValue();
+        cell.getGroup()
+                .stream()
+                .filter(Cell::isEmpty)
+                .forEach(x->x.removeCandidate(value));
     }
 
     private Set<Cell> initCellsGroups(Cell cell){
@@ -166,19 +189,6 @@ public class Field {
         return group;
     }
 
-    private void initCandidates() {
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                if (!field[i][j].isEmpty()){
-                int value = field[i][j].getValue();
-                   field[i][j].getGroup()
-                           .stream()
-                           .filter(Cell::isEmpty)
-                           .forEach(cell->cell.removeCandidate(value));
-                }
-            }
-        }
-    }
 
 
 }
