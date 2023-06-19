@@ -8,7 +8,10 @@ public class Cell {
     private Integer value;
     private boolean isEmpty = true;
     private List<Integer> candidates = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
-    private Set<Cell> group = new HashSet<>();
+    private Set<Cell> allCellsGroup = new HashSet<>();
+    private Set<Cell> rowsGroup = new HashSet<>();
+    private Set<Cell> columnsGroup = new HashSet<>();
+    private Set<Cell> quadroGroup = new HashSet<>();
 
     public Cell(int x, int y, int value) {
         this.x = x;
@@ -18,13 +21,7 @@ public class Cell {
         candidates.clear();}
     }
 
-    public void removeCandidate(Integer candidate){
-        this.candidates.remove(candidate);
-     //   System.out.println("removed " + candidate + " from cell with x " + x +  " and y " + y);
-        if (candidates.size() == 1) {this.value = candidates.get(0);
-        candidates.clear();
-        isEmpty = false;}
-    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -75,12 +72,43 @@ public class Cell {
         return this;
     }
 
-    public Set<Cell> getGroup() {
-        return group;
+    public Set<Cell> getAllCellsGroup() {
+        return allCellsGroup;
     }
 
-    public Cell setGroup(Set<Cell> group) {
-        this.group = group;
+    public void setAllCellsGroup() {
+        Set<Cell> allCells = new HashSet<>();
+        allCells.addAll(this.getQuadroGroup());
+        allCells.addAll(this.getRowsGroup());
+        allCells.addAll(this.getColumnsGroup());
+
+        this.allCellsGroup = allCells;
+    }
+
+    public Set<Cell> getQuadroGroup() {
+        return quadroGroup;
+    }
+
+    public Cell setQuadroGroup(Set<Cell> quadroGroup) {
+        this.quadroGroup = quadroGroup;
+        return this;
+    }
+
+    public Set<Cell> getRowsGroup() {
+        return rowsGroup;
+    }
+
+    public Cell setRowsGroup(Set<Cell> rowsGroup) {
+        this.rowsGroup = rowsGroup;
+        return this;
+    }
+
+    public Set<Cell> getColumnsGroup() {
+        return columnsGroup;
+    }
+
+    public Cell setColumnsGroup(Set<Cell> columnsGroup) {
+        this.columnsGroup = columnsGroup;
         return this;
     }
 }

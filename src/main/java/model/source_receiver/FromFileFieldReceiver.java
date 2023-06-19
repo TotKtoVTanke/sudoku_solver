@@ -13,7 +13,7 @@ public class FromFileFieldReceiver implements SudokuFieldReceiver{
     public Cell[][] getField() {
         Scanner sc = null;
         try {
-            sc = new Scanner(new File("F:\\Viks\\sudoku_solver\\example.txt"));
+            sc = new Scanner(new File("F:\\Viks\\sudoku_solver\\example3.txt"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
